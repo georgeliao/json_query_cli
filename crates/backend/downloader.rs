@@ -6,3 +6,13 @@ pub fn linear_download() -> Result<String, Box<dyn error::Error>> {
 
     return Ok(response);
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_linear_download() {
+        assert!(linear_download().is_ok());
+    }
+}
