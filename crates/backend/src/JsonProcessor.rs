@@ -69,9 +69,17 @@ impl JsonProcessor {
         product_name: &str,
         version_name: &str,
     ) -> Option<String> {
-
-
-        return None;
+        return self
+            .json_content_parsed
+            .get("products")?
+            .get(product_name)?
+            .get("versions")?
+            .get(version_name)?
+            .get("items")?
+            .get("disk1.img")?
+            .get("sha256")?
+            .as_str()
+            .map(|s| s.to_owned());
     }
 }
 
@@ -91,4 +99,12 @@ mod tests {
         processor.get_supported_ubuntu_releases();
     }
 
+    #[test]
+    fn test_get_disk1_img_sha256_of_release() {
+        let processor = JsonProcessor::new();
+        let sha256 = processor
+            .get_disk1_img_sha256_of_release("com.ubuntu.cloud:server:21.10:amd64", "20220708")
+            .unwrap();
+        println!("The sha256 value is {}", sha256);
+    }
 }
