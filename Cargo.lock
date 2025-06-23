@@ -657,6 +657,7 @@ dependencies = [
 name = "json_query_cli"
 version = "0.1.0"
 dependencies = [
+ "backend",
  "clap",
 ]
 
