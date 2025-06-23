@@ -14,7 +14,26 @@ impl JsonProcessor {
     }
 
     pub fn get_supported_ubuntu_releases(&self) -> Vec<String> {
-        return vec![String::from("")];
+        let mut release_strs: Vec<String> = vec![];
+        let products = self
+            .json_content_parsed
+            .get("products")
+            .unwrap()
+            .as_object()
+            .unwrap();
+        for (product_name, val) in products {
+            if product_name.ends_with("amd64") {
+                let supported = val.get("supported").unwrap().as_bool().unwrap();
+                if (supported) {
+                    let version = val.get("version").unwrap().as_str().unwrap();
+                    release_strs.push(version.to_owned());
+                }
+            }
+        }
+        for (ele) in &release_strs {
+            println!("{}", ele);
+        }
+        return release_strs;
     }
 
     pub fn get_current_ubuntu_lts(&self) -> f64 {
@@ -26,8 +45,8 @@ impl JsonProcessor {
             .unwrap()
             .as_object()
             .unwrap();
-        for (key, val) in products {
-            if key.ends_with("amd64") {
+        for (product_name, val) in products {
+            if product_name.ends_with("amd64") {
                 let release_title_value: &str = val.get("release_title").unwrap().as_str().unwrap();
                 if release_title_value.ends_with("LTS") {
                     let version_value = val
@@ -45,8 +64,14 @@ impl JsonProcessor {
         return current_version;
     }
 
-    pub fn get_sha256(&self, ubuntu_release: String) -> String {
-        return String::new();
+    pub fn get_disk1_img_sha256_of_release(
+        &self,
+        product_name: &str,
+        version_name: &str,
+    ) -> Option<String> {
+
+
+        return None;
     }
 }
 
@@ -59,4 +84,11 @@ mod tests {
         let processor = JsonProcessor::new();
         assert_eq!(processor.get_current_ubuntu_lts(), 24.04);
     }
+
+    #[test]
+    fn test_get_supported_ubuntu_releases() {
+        let processor = JsonProcessor::new();
+        processor.get_supported_ubuntu_releases();
+    }
+
 }
