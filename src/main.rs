@@ -12,6 +12,7 @@ use clap::{ArgGroup, Parser};
     )
 )]
 struct Cli {
+    /// get current ubuntu LTS
     #[arg(short, long)]
     lts: bool,
     /// get supported ubuntu releases
