@@ -1,7 +1,6 @@
 use crate::downloader;
 use serde_json::Value;
-
-struct JsonProcessor {
+pub struct JsonProcessor {
     json_content_parsed: Value,
 }
 // pub type Result<T> = std::result::Result<T, Error>;

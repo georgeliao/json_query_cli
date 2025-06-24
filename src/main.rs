@@ -1,3 +1,4 @@
+use backend::JsonProcessor;
 use clap::{ArgGroup, Parser};
 
 #[derive(Parser)]
@@ -23,9 +24,9 @@ struct Cli {
     sha256_release: Option<String>,
 }
 
-fn main() {
+fn main() -> Result<(), Box<dyn std::error::Error>> {
     let cli: Cli = Cli::parse();
-
+    let json_processor = JsonProcessor::new()?;
     if cli.lts {
         println!("Getting current LTS...");
     } else if cli.releases {
@@ -36,4 +37,5 @@ fn main() {
         eprintln!("No valid mode specified.");
         std::process::exit(1);
     }
+    return Ok(());
 }

@@ -1,2 +1,3 @@
 pub mod downloader;
-pub mod JsonProcessor;
+pub mod json_processor;
+pub use json_processor::JsonProcessor;
