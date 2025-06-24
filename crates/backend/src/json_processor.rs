@@ -45,22 +45,26 @@ impl JsonProcessor {
         return Some(current_version);
     }
 
-    pub fn get_disk1_img_sha256_of_release(
-        &self,
-        product_name: &str,
-        version_name: &str,
-    ) -> Option<String> {
-        return self
-            .json_content_parsed
-            .get("products")?
-            .get(product_name)?
-            .get("versions")?
-            .get(version_name)?
-            .get("items")?
-            .get("disk1.img")?
-            .get("sha256")?
-            .as_str()
-            .map(|s| s.to_owned());
+    pub fn get_disk1_img_sha256_of_release(&self, release_version: &str) -> Option<String> {
+        let products = self.json_content_parsed.get("products")?.as_object()?;
+        for (product_name, val) in products {
+            if product_name.ends_with("amd64") {
+                let current_release_version: &str = val.get("version")?.as_str()?;
+                if (current_release_version == release_version) {
+                    let last_version: (&String, &Value) =
+                        val.get("versions")?.as_object()?.iter().last()?;
+                    return last_version
+                        .1
+                        .get("items")?
+                        .get("disk1.img")?
+                        .get("sha256")?
+                        .as_str()
+                        .map(|s| s.to_owned());
+                }
+            }
+        }
+
+        return None;
     }
 }
 
@@ -83,9 +87,15 @@ mod tests {
     #[test]
     fn test_get_disk1_img_sha256_of_release() {
         let processor = JsonProcessor::new().unwrap();
-        let sha256: String = processor
-            .get_disk1_img_sha256_of_release("com.ubuntu.cloud:server:21.10:amd64", "20220708")
-            .unwrap();
-        println!("The sha256 value is {}", sha256);
+        assert_eq!(
+            processor.get_disk1_img_sha256_of_release("24.10").unwrap(),
+            "8446856f1903fd305a17cfb610bbb6c01e8e2230cdf41d44fc9e3d824f747ff4"
+        )
+    }
+
+    #[test]
+    fn test_get_disk1_img_sha256_of_release_non_exist() {
+        let processor = JsonProcessor::new().unwrap();
+        assert!(processor.get_disk1_img_sha256_of_release("24.05").is_none())
     }
 }

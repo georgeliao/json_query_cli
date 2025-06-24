@@ -46,7 +46,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         println!("Getting sha256 for release: {release}");
     } else {
         eprintln!("No valid mode specified.");
-        std::process::exit(1);
     }
     return Ok(());
 }
