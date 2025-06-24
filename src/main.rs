@@ -42,8 +42,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         for item in &supported_releases {
             println!("{}", item);
         }
-    } else if let Some(release) = cli.sha256_release {
-        println!("Getting sha256 for release: {release}");
+    } else if let Some(release_version) = cli.sha256_release {
+        println!(
+            "Getting sha256 for release: {release_version}\n\n{}",
+            json_processor
+                .get_disk1_img_sha256_of_release(&release_version)
+                .ok_or("Could not get the sha256 for the given release")?
+        );
     } else {
         eprintln!("No valid mode specified.");
     }
