@@ -5,7 +5,7 @@ pub struct UbuntuImageJsonProcessor {
 }
 // pub type Result<T> = std::result::Result<T, Error>;
 impl UbuntuImageJsonProcessor {
-    fn new() -> Result<Self, Box<dyn std::error::Error>> {
+    pub fn new() -> Result<Self, Box<dyn std::error::Error>> {
         return Ok(UbuntuImageJsonProcessor {
             json_content_parsed: serde_json::from_str(&downloader::linear_download()?)?,
         });

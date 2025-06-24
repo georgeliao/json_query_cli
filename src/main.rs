@@ -1,4 +1,5 @@
 use backend::UbuntuImageJsonProcessor;
+use backend::JsonProcessor;
 use clap::{ArgGroup, Parser};
 
 #[derive(Parser)]
