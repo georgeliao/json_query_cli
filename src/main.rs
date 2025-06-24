@@ -20,7 +20,7 @@ struct Cli {
     /// get supported ubuntu releases
     #[arg(short, long)]
     releases: bool,
-    /// get the shar256 of a disk1_img of a release
+    /// get the shar256 of a disk1_img of the latest version of a release
     #[arg(short, long)]
     sha256_release: Option<String>,
 }
