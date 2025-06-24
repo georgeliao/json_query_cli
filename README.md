@@ -12,13 +12,21 @@ A command-line tool written in Rust to query Ubuntu cloud image metadata from th
 ### Clone the project
 
 ```bash
-git clone https://github.com/your-username/json_query_cli.git
+git clone https://github.com/georgeliao/json_query_cli.git
 cd json_query_cli
+```
+### Build
+```bash
 cargo build --release
+```
+### Run
+```bash
 cargo run -- --help
+```
+Or directly:
+```bash
 ./target/release/json_query_cli --lts
 ```
-
 ### Run tests
 ```bash
 cargo test
