@@ -18,7 +18,7 @@ impl JsonProcessor {
         for (product_name, val) in products {
             if product_name.ends_with("amd64") {
                 let supported = val.get("supported")?.as_bool()?;
-                if (supported) {
+                if supported {
                     let version = val.get("version")?.as_str()?;
                     release_strs.push(version.to_owned());
                 }
@@ -50,7 +50,7 @@ impl JsonProcessor {
         for (product_name, val) in products {
             if product_name.ends_with("amd64") {
                 let current_release_version: &str = val.get("version")?.as_str()?;
-                if (current_release_version == release_version) {
+                if current_release_version == release_version {
                     let last_version: (&String, &Value) =
                         val.get("versions")?.as_object()?.iter().last()?;
                     return last_version
