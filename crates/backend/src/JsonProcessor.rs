@@ -36,32 +36,21 @@ impl JsonProcessor {
         return release_strs;
     }
 
-    pub fn get_current_ubuntu_lts(&self) -> f64 {
-        let mut current_version = 0.0;
+    pub fn get_current_ubuntu_lts(&self) -> Option<f64> {
+        let mut current_version: f64 = 0.0;
 
-        let products = self
-            .json_content_parsed
-            .get("products")
-            .unwrap()
-            .as_object()
-            .unwrap();
+        let products = self.json_content_parsed.get("products")?.as_object()?;
         for (product_name, val) in products {
             if product_name.ends_with("amd64") {
-                let release_title_value: &str = val.get("release_title").unwrap().as_str().unwrap();
+                let release_title_value: &str = val.get("release_title")?.as_str()?;
                 if release_title_value.ends_with("LTS") {
-                    let version_value = val
-                        .get("version")
-                        .unwrap()
-                        .as_str()
-                        .unwrap()
-                        .parse::<f64>()
-                        .unwrap();
+                    let version_value = val.get("version")?.as_str()?.parse::<f64>().ok()?;
                     current_version = f64::max(current_version, version_value);
                 }
             }
         }
 
-        return current_version;
+        return Some(current_version);
     }
 
     pub fn get_disk1_img_sha256_of_release(
@@ -90,7 +79,7 @@ mod tests {
     #[test]
     fn test_get_current_ubuntu_lts() {
         let processor = JsonProcessor::new();
-        assert_eq!(processor.get_current_ubuntu_lts(), 24.04);
+        assert_eq!(processor.get_current_ubuntu_lts().unwrap(), 24.04);
     }
 
     #[test]
