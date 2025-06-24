@@ -28,9 +28,20 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let cli: Cli = Cli::parse();
     let json_processor = JsonProcessor::new()?;
     if cli.lts {
-        println!("Getting current LTS...");
+        println!(
+            "Getting current LTS \n{}",
+            json_processor
+                .get_current_ubuntu_lts()
+                .ok_or("Could not get current LTS version")?
+        );
     } else if cli.releases {
+        let supported_releases = json_processor
+            .get_supported_ubuntu_releases()
+            .ok_or("Could not get the supported releases")?;
         println!("Listing all supported releases...");
+        for item in &supported_releases {
+            println!("{}", item);
+        }
     } else if let Some(release) = cli.sha256_release {
         println!("Getting sha256 for release: {release}");
     } else {
