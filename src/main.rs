@@ -1,4 +1,4 @@
-use backend::JsonProcessor;
+use backend::UbuntuImageJsonProcessor;
 use clap::{ArgGroup, Parser};
 
 #[derive(Parser)]
@@ -26,7 +26,7 @@ struct Cli {
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let cli: Cli = Cli::parse();
-    let json_processor = JsonProcessor::new()?;
+    let json_processor = UbuntuImageJsonProcessor::new()?;
     if cli.lts {
         println!(
             "Getting current LTS \n{}",
