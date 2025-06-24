@@ -27,6 +27,7 @@ struct Cli {
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let cli: Cli = Cli::parse();
+    // TODO, mock the class so we can test the logic in main
     let json_processor: Box<dyn JsonProcessor> = Box::new(UbuntuImageJsonProcessor::new()?);
 
     if cli.lts {
