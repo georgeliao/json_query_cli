@@ -1,0 +1,6 @@
+max_width = 100               # Line wrap limit
+tab_spaces = 4                # Spaces per tab
+use_small_heuristics = "Max" # Controls when rustfmt puts args/params on new lines
+fn_params_layout = "Tall"    # Function parameter formatting
+reorder_imports = true       # Sort imports alphabetically
+newline_style = "Unix"       # Line endings

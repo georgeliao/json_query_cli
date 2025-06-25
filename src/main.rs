@@ -33,9 +33,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     if cli.lts {
         println!(
             "Getting current LTS \n{}",
-            json_processor
-                .get_current_ubuntu_lts()
-                .ok_or("Could not get current LTS version")?
+            json_processor.get_current_ubuntu_lts().ok_or("Could not get current LTS version")?
         );
     } else if cli.releases {
         let supported_releases = json_processor
