@@ -3,7 +3,7 @@ use serde_json::Value;
 pub struct UbuntuImageJsonProcessor {
     json_content_parsed: Value,
 }
-// pub type Result<T> = std::result::Result<T, Error>;
+
 impl UbuntuImageJsonProcessor {
     pub fn new() -> Result<Self, Box<dyn std::error::Error>> {
         return Ok(UbuntuImageJsonProcessor {
@@ -26,7 +26,7 @@ impl JsonProcessor for UbuntuImageJsonProcessor {
             }
         }
 
-        return Some(release_strs);
+        Some(release_strs)
     }
 
     fn get_current_ubuntu_lts(&self) -> Option<f64> {
@@ -43,7 +43,7 @@ impl JsonProcessor for UbuntuImageJsonProcessor {
             }
         }
 
-        return Some(current_version);
+        Some(current_version)
     }
 
     fn get_disk1_img_sha256_of_release(&self, release_version: &str) -> Option<String> {
@@ -65,7 +65,7 @@ impl JsonProcessor for UbuntuImageJsonProcessor {
             }
         }
 
-        return None;
+        None
     }
 }
 

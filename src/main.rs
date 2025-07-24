@@ -53,5 +53,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     } else {
         eprintln!("No valid mode specified.");
     }
-    return Ok(());
+    
+    Ok(())
 }
