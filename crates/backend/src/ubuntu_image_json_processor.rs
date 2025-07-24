@@ -90,7 +90,7 @@ mod tests {
         let processor = UbuntuImageJsonProcessor::new().unwrap();
         assert_eq!(
             processor.get_disk1_img_sha256_of_release("24.10").unwrap(),
-            "8446856f1903fd305a17cfb610bbb6c01e8e2230cdf41d44fc9e3d824f747ff4"
+            "69f31d3208895e5f646e345fbc95190e5e311ecd1359a4d6ee2c0b6483ceca03"
         )
     }
 
