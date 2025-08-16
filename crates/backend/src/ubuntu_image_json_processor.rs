@@ -53,7 +53,7 @@ impl JsonProcessor for UbuntuImageJsonProcessor {
                 let current_release_version: &str = val.get("version")?.as_str()?;
                 if current_release_version == release_version {
                     let last_version: (&String, &Value) =
-                        val.get("versions")?.as_object()?.iter().last()?;
+                        val.get("versions")?.as_object()?.iter().next_back()?;
                     return last_version
                         .1
                         .get("items")?
