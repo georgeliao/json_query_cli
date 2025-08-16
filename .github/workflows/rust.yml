@@ -18,6 +18,8 @@ jobs:
     - uses: actions/checkout@v4
     - name: Check formatting
       run: cargo fmt --all -- --check
+    - name: Run cargo clippy
+      run: cargo clippy --all-targets --all-features -- -D warnings
     - name: Check for build errors
       run: cargo check --workspace
     - name: Build
